@@ -32,6 +32,9 @@ class StudentTestCase(LiveServerTestCase):
             instrument='saxophone'
         )
 
+    def find_search_results(self):
+        return self.browser.find_elements(By.CSS_SELECTOR, '.jmad-search-result a')
+
     def test_student_find_solos(self):
         """
         test that a user can search for solos
@@ -65,8 +68,7 @@ class StudentTestCase(LiveServerTestCase):
 
         # he sees many results, so he adds a particular
         # artist to his search query
-        searched_results = self.browser.find_elements(
-            By.CLASS_NAME, 'jmad-search-result')
+        searched_results = self.find_search_results()
         self.assertGreater(len(searched_results), 2)
 
         # ...so he adds a particular artist to his search query, and gets
@@ -77,23 +79,29 @@ class StudentTestCase(LiveServerTestCase):
         # second_artist_input.submit()
         self.browser.find_element(By.CSS_SELECTOR, 'form button').click()
 
-        second_searched_results = self.browser.find_elements(
-            By.CLASS_NAME, 'jmad-search-result')
+        second_searched_results = self.find_search_results()
         self.assertEqual(len(second_searched_results), 2)
-        
+
         # He clicks on search results
         second_searched_results[0].click()
-        
+
         # in the solo page he sees, title, artist and album of this particular solo
-        import pdb; pdb.set_trace()
-        self.assertEqual(self.browser.current_url, '{}/solo/2/'.format(self.live_server_url))
-        self.assertEqual(self.browser.find_element(By.ID, 'jmad-artist').text, 'Canonbal Adderlay')
-        self.assertEqual(self.browser.find_element(By.ID, 'jmad-track').text, 'All Blues')
-        self.assertEqual(self.browser.find_element(By.ID, 'jmad-album').text, 'Kind of Blue')
+        import pdb
+        pdb.set_trace()
+        self.assertEqual(self.browser.current_url,
+                         '{}/solos/2/'.format(self.live_server_url))
+        self.assertEqual(self.browser.find_element(
+            By.ID, 'jmad-artist').text, 'Canonbal Adderlay')
+        self.assertEqual(self.browser.find_element(
+            By.ID, 'jmad-track').text, 'All Blues')
+        self.assertEqual(self.browser.find_element(
+            By.ID, 'jmad-album').text, 'Kind of Blue')
         # and the start time and end time of the solo
-        self.assertEqual(self.browser.find_element(By.ID, 'jmad-start-time').text, '2:06')
-        self.assertEqual(self.browser.find_element(By.ID, 'jmad-end-time').text, '4:01')
-        
+        self.assertEqual(self.browser.find_element(
+            By.ID, 'jmad-start-time').text, '2:06')
+        self.assertEqual(self.browser.find_element(
+            By.ID, 'jmad-end-time').text, '4:01')
+
         self.fail('Incomplete Test')
 
     def tearDown(self):

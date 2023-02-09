@@ -52,7 +52,7 @@ class SoloViewTestCase(SoloBaseTestCase):
 
     def test_basic(self):
         '''check page response is 200, and usees the correct template, and has the correct context'''
-        request = self.factory.get('/solo/1/')
+        request = self.factory.get('/solos/1/')
         response = SoloDetailView.as_view()(request, pk=self.drum_solo.pk)
 
         self.assertEqual(response.status_code, 200)

@@ -4,20 +4,27 @@ from solos.views import index, SoloDetailView
 from solos.models import Solo
 
 
-class IndexViewTestCase(TestCase):
+class SoloBaseTestCase(TestCase):
 
     def setUp(self):
         self.factory = RequestFactory()
-        self.drum_solo = Solo.objects.create(
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.drum_solo = Solo.objects.create(
             track='Bugle Call Rag',
             artist='Rich',
             instrument='drums'
         )
-        self.bass_solo = Solo.objects.create(
+        cls.bass_solo = Solo.objects.create(
             track='Mr. PC',
             artist='Coltrane',
             instrument='saxophone'
         )
+
+
+class IndexViewTestCase(SoloBaseTestCase):
 
     def test_index_view_basic(self):
         '''
@@ -39,21 +46,16 @@ class IndexViewTestCase(TestCase):
         self.assertIs(type(solos), QuerySet)
         self.assertEqual(len(solos), 1)
         self.assertEqual(solos[0].artist, 'Rich')
-        
-        
-        
-class SoloViewTestCase(TestCase):
-    
-    def setUp(self):
-        self.factory = RequestFactory()
-        
+
+
+class SoloViewTestCase(SoloBaseTestCase):
+
     def test_basic(self):
         '''check page response is 200, and usees the correct template, and has the correct context'''
         request = self.factory.get('/solo/1/')
         response = SoloDetailView.as_view()(request, self.drum_solo.pk)
-        
+
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.contex_data['solo'].artis, 'Rich')
         with self.assertTemplateUsed('solos/solo_detail.html'):
             response.render()
-        

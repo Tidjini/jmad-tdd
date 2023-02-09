@@ -15,13 +15,17 @@ class StudentTestCase(LiveServerTestCase):
         self.browser.implicitly_wait(5)
 
         self.solo = Solo.objects.create(
-            track='My Favorite Thing',
+            track='My Favorite Things',
+            album='My Favorite Things',
             artist='John Coltrane',
             instrument='saxophone'
         )
 
         self.solo2 = Solo.objects.create(
             track='All Blues',
+            album='Kind of Blue',
+            start_time='2:06',
+            end_time='4:01',
             artist='Canonbal Adderlay',
             instrument='saxophone'
         )
@@ -29,7 +33,8 @@ class StudentTestCase(LiveServerTestCase):
         self.solo3 = Solo.objects.create(
             track='Walts for Debby',
             artist='Canonbal Adderlay',
-            instrument='saxophone'
+            instrument='saxophone',
+            album='Know What I Mean?'
         )
 
     def find_search_results(self):

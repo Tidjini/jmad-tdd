@@ -16,7 +16,6 @@ class SolosUrlsTestCase(TestCase):
         '''
         Test that the url of the detail resolve to the correct function view
         '''
-
         solo_detail = resolve('/solos/1/')
-        self.assertEqual(solo_detail.func.__name__, 'SoloDetailView')
-        self.assertEqual(solo_detail.kwargs('pk'), '1')
+        self.assertEqual(solo_detail.func.__name__, 'view')
+        self.assertEqual(solo_detail.kwargs['pk'], '1')

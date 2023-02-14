@@ -91,8 +91,8 @@ class StudentTestCase(LiveServerTestCase):
         second_searched_results[0].click()
 
         # in the solo page he sees, title, artist and album of this particular solo
-        # import pdb
-        # pdb.set_trace()
+        import pdb
+        pdb.set_trace()
         self.assertEqual(self.browser.current_url,
                          '{}/solos/2/'.format(self.live_server_url))
         self.assertEqual(self.browser.find_element(

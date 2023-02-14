@@ -10,3 +10,11 @@ class Solo(models.Model):
     album = models.CharField(max_length=100)
     start_time = models.CharField(max_length=20)
     end_time = models.CharField(max_length=20)
+
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('solo_detail_view', kwargs={
+            'album': self.track.album.slug,
+            'track': self.track.slug,
+            'artist': self.slug,
+        })

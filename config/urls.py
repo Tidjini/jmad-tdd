@@ -24,6 +24,7 @@ urlpatterns = [
     # re_path(r'^solos/(?P<pk>\d+)/$', views.SoloDetailView.as_view())
     re_path(
         r'^recordings/(?P<album>[\w-]+)/(?P<track>[\w-]+)/(?P<artist>[\w-]+)/$',
-        views.SoloDetailView.as_view()
+        views.SoloDetailView.as_view(),
+        name='solo_detail_view'
     )
 ]

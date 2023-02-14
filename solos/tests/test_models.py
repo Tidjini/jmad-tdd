@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from solos.models import Solo, Album, Track
+from solos.models import Solo
+from albums.models import Album, Track
 
 
 class SoloModelTestCase(TestCase):
@@ -23,7 +24,6 @@ class SoloModelTestCase(TestCase):
             track=self.track,
             artist='Oscar Peterson',
             instrument='piano',
-            album='At the Startford Shakespearean Festival',
             start_time='1:24',
             end_time='4:06',
             slug='oscar-peterson'

@@ -91,8 +91,8 @@ class StudentTestCase(LiveServerTestCase):
         second_searched_results[0].click()
 
         # in the solo page he sees, title, artist and album of this particular solo
-        import pdb
-        pdb.set_trace()
+        # import pdb
+        # pdb.set_trace()
         self.assertEqual(self.browser.current_url,
                          '{}/solos/2/'.format(self.live_server_url))
         self.assertEqual(self.browser.find_element(
@@ -108,6 +108,29 @@ class StudentTestCase(LiveServerTestCase):
             By.ID, 'jmad-end-time').text, '4:01')
 
         self.fail('Incomplete Test')
+
+    def test_solo_page(self):
+        self.assertEqual(self.browser.current_url,
+                         self.live_server_url +
+                         '/recordings/kind-of-blue/all-blues/cannonball-adderley/'
+                         )
+
+        # he sees the artist
+        self.assertEqual(
+            self.browser.find_element(By.CSS_SELECTOR, '#jmad-artist').text,
+            'Cannonball Adderley'
+        )
+        # the track title (with count of solos)
+        self.assertEqual(
+            self.browser.find_element(By.CSS_SELECTOR, "#jmad-track").text,
+            'All Blues [2 solos]'
+        )
+
+        # and the album title (with track count) for this solo
+        self.assertEqual(
+            self.browser.find_element(By.CSS_SELECTOR, '#jmad-album').text,
+            'Kind of Blue [3 tracks]'
+        )
 
     def tearDown(self):
         self.browser.quit()

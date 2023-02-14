@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 from solos.models import Solo
+from albums.models import Album, Track
 
 
 class StudentTestCase(LiveServerTestCase):
@@ -14,27 +15,64 @@ class StudentTestCase(LiveServerTestCase):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(5)
 
-        self.solo = Solo.objects.create(
-            track='My Favorite Things',
-            album='My Favorite Things',
+        self.album1 = Album.objects.create(
+            name='My Favorite Things', slug='my-favorite-things'
+        )
+        self.track1 = Track.objects.create(
+            name='My Favorite Things', slug='my-favorite-things',
+            album=self.album1
+        )
+
+        self.solo1 = Solo.objects.create(
+            track=self.track1,
             artist='John Coltrane',
-            instrument='saxophone'
+            instrument='saxophone',
+            slug='john-coltrane'
+        )
+
+        self.album2 = Album.objects.create(
+            name='Kind of Blue', slug='kind-of-blue',
+        )
+        self.track2 = Track.objects.create(
+            name='All Blues', slug='all-blues',
+            album=self.album2, track_number=4
         )
 
         self.solo2 = Solo.objects.create(
-            track='All Blues',
-            album='Kind of Blue',
+            track=self.track2,
             start_time='2:06',
             end_time='4:01',
-            artist='Canonbal Adderlay',
-            instrument='saxophone'
+            artist='Cannonball Adderley',
+            instrument='saxophone',
+            slug='cannonball-adderley'
         )
 
+        self.album3 = Album.objects.create(
+            name='Know What I Mean?', slug='know-what-i-mean'
+        )
+        self.track3 = Track.objects.create(
+            name='Waltz for Debby', slug='waltz-for-debby',
+            album=self.album3
+        )
+
+        self.track4 = Track.objects.create(
+            name='Freeddie Freeloader', album=self.album2
+        )
+        self.track5 = Track.objects.create(
+            name='Blue in Green', album=self.album2
+        )
         self.solo3 = Solo.objects.create(
-            track='Walts for Debby',
-            artist='Canonbal Adderlay',
+            track=self.track3,
+            artist='Cannonball Adderley',
             instrument='saxophone',
-            album='Know What I Mean?'
+            slug='cannonball-adderley'
+        )
+
+        self.solo4 = Solo.objects.create(
+            track=self.track2,
+            artist='Miles Davis',
+            instrument='trumpet',
+            slug='miles-davis'
         )
 
     def find_search_results(self):
@@ -80,7 +118,7 @@ class StudentTestCase(LiveServerTestCase):
         # more manageble list
         second_artist_input = self.browser.find_element(
             By.CSS_SELECTOR, f'input#{self.ARTIST_INPUT_ID}')
-        second_artist_input.send_keys('Canonbal Adderlay')
+        second_artist_input.send_keys('Cannonball Adderley')
         # second_artist_input.submit()
         self.browser.find_element(By.CSS_SELECTOR, 'form button').click()
 
@@ -93,23 +131,6 @@ class StudentTestCase(LiveServerTestCase):
         # in the solo page he sees, title, artist and album of this particular solo
         import pdb
         pdb.set_trace()
-        self.assertEqual(self.browser.current_url,
-                         '{}/solos/2/'.format(self.live_server_url))
-        self.assertEqual(self.browser.find_element(
-            By.ID, 'jmad-artist').text, 'Canonbal Adderlay')
-        self.assertEqual(self.browser.find_element(
-            By.ID, 'jmad-track').text, 'All Blues')
-        self.assertEqual(self.browser.find_element(
-            By.ID, 'jmad-album').text, 'Kind of Blue')
-        # and the start time and end time of the solo
-        self.assertEqual(self.browser.find_element(
-            By.ID, 'jmad-start-time').text, '2:06')
-        self.assertEqual(self.browser.find_element(
-            By.ID, 'jmad-end-time').text, '4:01')
-
-        self.fail('Incomplete Test')
-
-    def test_solo_page(self):
         self.assertEqual(self.browser.current_url,
                          self.live_server_url +
                          '/recordings/kind-of-blue/all-blues/cannonball-adderley/'
@@ -131,6 +152,7 @@ class StudentTestCase(LiveServerTestCase):
             self.browser.find_element(By.CSS_SELECTOR, '#jmad-album').text,
             'Kind of Blue [3 tracks]'
         )
+        self.fail('Incomplete Test')
 
     def tearDown(self):
         self.browser.quit()

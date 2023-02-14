@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 
 from solos import views
 
@@ -24,7 +24,7 @@ urlpatterns = [
     # re_path(r'^solos/(?P<pk>\d+)/$', views.SoloDetailView.as_view())
     re_path(
         r'^recordings/(?P<album>[\w-]+)/(?P<track>[\w-]+)/(?P<artist>[\w-]+)/$',
-        views.SoloDetailView.as_view(),
+        views.solo_detail,
         name='solo_detail_view'
     )
 ]

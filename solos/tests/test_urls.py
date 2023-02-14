@@ -18,7 +18,7 @@ class SolosUrlsTestCase(TestCase):
         '''
         solo_detail = resolve(
             '/recordings/kind-of-blue/all-blues/cannonbal-adderley/')
-        self.assertEqual(solo_detail.func.__name__, 'view')
+        self.assertEqual(solo_detail.func.__name__, 'solo_detail')
 
         self.assertEqual(solo_detail.kwargs['album'], 'kind-of-blue')
         self.assertEqual(solo_detail.kwargs['track'], 'all-blues')

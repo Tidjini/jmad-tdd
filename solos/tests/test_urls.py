@@ -12,10 +12,14 @@ class SolosUrlsTestCase(TestCase):
         root = resolve('/')
         self.assertEqual(root.func, index)
 
-    def test_solo_detail_url(self):
+    def test_solo_details_url(self):
         '''
         Test that the url of the detail resolve to the correct function view
         '''
-        solo_detail = resolve('/solos/1/')
+        solo_detail = resolve(
+            '/recordings/kind-of-blue/all-blues/cannonbal-adderley/')
         self.assertEqual(solo_detail.func.__name__, 'view')
-        self.assertEqual(solo_detail.kwargs['pk'], '1')
+
+        self.assertEqual(solo_detail.kwargs['album'], 'kind-of-blue')
+        self.assertEqual(solo_detail.kwargs['track'], 'all-blues')
+        self.assertEqual(solo_detail.kwargs['artist'], 'cannonbal-adderley')

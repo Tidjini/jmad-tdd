@@ -154,5 +154,16 @@ class StudentTestCase(LiveServerTestCase):
         )
         self.fail('Incomplete Test')
 
+    def test_staff_can_add_content(self):
+        # Test Staff Acces to admin page
+
+        # Test adding record and solos number
+
+        # staff is in the right place because of the title
+        #
+        # username & password to login
+        #
+        # sees links to Albums, Tracks, Solos
+
     def tearDown(self):
         self.browser.quit()

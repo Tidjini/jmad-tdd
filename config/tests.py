@@ -152,11 +152,13 @@ class StudentTestCase(LiveServerTestCase):
             self.browser.find_element(By.CSS_SELECTOR, '#jmad-album').text,
             'Kind of Blue [3 tracks]'
         )
-        self.fail('Incomplete Test')
 
     def test_staff_can_add_content(self):
         # Test Staff Acces to admin page
-
+        admin_root = self.browser.get(self.live_server_url + '/admin/')
+        # staff can tell he is in right place by the title
+        self.assertEqual(self.browser.title, 'Log in | Django site admin')
+        self.fail('Incomplete Test')
         # Test adding record and solos number
 
         # staff is in the right place because of the title

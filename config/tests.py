@@ -1,4 +1,5 @@
 from django.test import LiveServerTestCase
+from django.contrib.auth import get_user_model
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
@@ -14,6 +15,12 @@ class StudentTestCase(LiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(5)
+
+        self.admin_user = get_user_model().objects.create_superuser(
+            username='bill',
+            email='bill@example.com',
+            password='password'
+        )
 
         self.album1 = Album.objects.create(
             name='My Favorite Things', slug='my-favorite-things'
@@ -158,6 +165,14 @@ class StudentTestCase(LiveServerTestCase):
         admin_root = self.browser.get(self.live_server_url + '/admin/')
         # staff can tell he is in right place by the title
         self.assertEqual(self.browser.title, 'Log in | Django site admin')
+
+        # He enters his name and password to login
+        login_form = self.browser.find_element(By.ID, 'login-form')
+
+        login_form.find_element(By.NAME, 'username').send_keys('bill')
+        login_form.find_element(By.NAME, 'password').send_keys('password')
+        login_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
+
         import pdb
         pdb.set_trace()
 

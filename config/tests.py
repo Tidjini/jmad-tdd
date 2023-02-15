@@ -158,6 +158,9 @@ class StudentTestCase(LiveServerTestCase):
         admin_root = self.browser.get(self.live_server_url + '/admin/')
         # staff can tell he is in right place by the title
         self.assertEqual(self.browser.title, 'Log in | Django site admin')
+        import pdb
+        pdb.set_trace()
+
         self.fail('Incomplete Test')
         # Test adding record and solos number
 

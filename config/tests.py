@@ -200,19 +200,19 @@ class StudentTestCase(LiveServerTestCase):
         self.assertEqual(
             self.browser.find_element(
                 By.LINK_TEXT, 'Know What I Mean?').get_attribute('href'),
-            self.live_server_url + 'admin/albums/album/3/'
+            self.live_server_url + '/admin/albums/album/3/change/'
         )
 
         self.assertEqual(
             self.browser.find_element(
                 By.LINK_TEXT, 'Kind of Blue').get_attribute('href'),
-            self.live_server_url + 'admin/albums/album/2/'
+            self.live_server_url + '/admin/albums/album/2/change/'
         )
 
         self.assertEqual(
             self.browser.find_element(
                 By.LINK_TEXT, 'My Favorite Things').get_attribute('href'),
-            self.live_server_url + 'admin/albums/album/1/'
+            self.live_server_url + '/admin/albums/album/1/change/'
         )
         self.fail('Incomplete Test')
         # Test adding record and solos number

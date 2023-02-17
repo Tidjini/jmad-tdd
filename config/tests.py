@@ -136,8 +136,6 @@ class StudentTestCase(LiveServerTestCase):
         second_searched_results[0].click()
 
         # in the solo page he sees, title, artist and album of this particular solo
-        import pdb
-        pdb.set_trace()
         self.assertEqual(self.browser.current_url,
                          self.live_server_url +
                          '/recordings/kind-of-blue/all-blues/cannonball-adderley/'
@@ -172,6 +170,34 @@ class StudentTestCase(LiveServerTestCase):
         login_form.find_element(By.NAME, 'username').send_keys('bill')
         login_form.find_element(By.NAME, 'password').send_keys('password')
         login_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
+
+        # He sees links to Album, Tracks, and Solos
+
+        album_links = self.browser.find_elements(By.LINK_TEXT, 'Albums')
+        self.assertEqual(
+            album_links[0].get_attribute('href'),
+            self.live_server_url + '/admin/albums/'
+        )
+        self.assertEqual(
+            album_links[1].get_attribute('href'),
+            self.live_server_url + '/admin/albums/album/'
+        )
+
+        self.assertEqual(
+            self.browser.find_element(
+                By.LINK_TEXT, 'Tracks').get_attribute('href'),
+            self.live_server_url + '/admin/albums/track/'
+        )
+
+        solo_links = self.browser.find_elements(By.LINK_TEXT, 'Solos')
+        self.assertEqual(
+            solo_links[0].get_attribute('href'),
+            self.live_server_url + '/admin/solos/'
+        )
+        self.assertEqual(
+            solo_links[1].get_attribute('href'),
+            self.live_server_url + '/admin/solos/solo/'
+        )
 
         import pdb
         pdb.set_trace()

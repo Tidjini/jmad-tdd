@@ -194,9 +194,6 @@ class StudentTestCase(LiveServerTestCase):
         # he click on album link to display all albums added
         album_links.click()
 
-        import pdb
-        pdb.set_trace()
-
         self.assertEqual(
             self.browser.find_element(
                 By.LINK_TEXT, 'Know What I Mean?').get_attribute('href'),
@@ -214,6 +211,27 @@ class StudentTestCase(LiveServerTestCase):
                 By.LINK_TEXT, 'My Favorite Things').get_attribute('href'),
             self.live_server_url + '/admin/albums/album/1/change/'
         )
+
+        # he going back to root and click on track link
+        self.browser.find_element(By.CSS_SELECTOR, '#site-name a').click()
+
+        self.browser.find_element(By.LINK_TEXT, 'Tracks').click()
+
+        track_rows = self.browser.find_elements(
+            By.CSS_SELECTOR, '#result_list tr')
+
+        import pdb
+        pdb.set_trace()
+
+        self.assertEqual(track_rows[1].text,
+                         'Kind of Blue Freddie Freeloader 2')
+        self.assertEqual(track_rows[2].text, 'Kind of Blue Blue in Green 3')
+        self.assertEqual(track_rows[3].text, 'Kind of Blue All Blues 4')
+        self.assertEqual(track_rows[4].text,
+                         'Know What I Mean? Walts for Debby (None)')
+        self.assertEqual(
+            track_rows[5].text, 'My Favorite Things My Favorite Things (None)')
+
         self.fail('Incomplete Test')
         # Test adding record and solos number
 

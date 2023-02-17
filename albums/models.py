@@ -17,3 +17,6 @@ class Track(models.Model):
     album = models.ForeignKey(Album, on_delete=models.CASCADE)
     track_number = models.PositiveIntegerField(blank=True, null=True)
     slug = models.SlugField()
+
+    def __str__(self) -> str:
+        return self.name

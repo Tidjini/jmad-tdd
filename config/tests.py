@@ -173,8 +173,6 @@ class StudentTestCase(LiveServerTestCase):
 
         # He sees links to Album, Tracks, and Solos
 
-        import pdb
-        pdb.set_trace()
         album_links = self.browser.find_element(By.LINK_TEXT, 'Albums')
         self.assertEqual(
             album_links.get_attribute('href'),
@@ -193,6 +191,29 @@ class StudentTestCase(LiveServerTestCase):
             self.live_server_url + '/admin/solos/solo/'
         )
 
+        # he click on album link to display all albums added
+        album_links.click()
+
+        import pdb
+        pdb.set_trace()
+
+        self.assertEqual(
+            self.browser.find_element(
+                By.LINK_TEXT, 'Know What I Mean?').get_attribute('href'),
+            self.live_server_url + 'admin/albums/album/3/'
+        )
+
+        self.assertEqual(
+            self.browser.find_element(
+                By.LINK_TEXT, 'Kind of Blue').get_attribute('href'),
+            self.live_server_url + 'admin/albums/album/2/'
+        )
+
+        self.assertEqual(
+            self.browser.find_element(
+                By.LINK_TEXT, 'My Favorite Things').get_attribute('href'),
+            self.live_server_url + 'admin/albums/album/1/'
+        )
         self.fail('Incomplete Test')
         # Test adding record and solos number
 

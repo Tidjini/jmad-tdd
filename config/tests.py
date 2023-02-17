@@ -220,9 +220,6 @@ class StudentTestCase(LiveServerTestCase):
         track_rows = self.browser.find_elements(
             By.CSS_SELECTOR, '#result_list tr')
 
-        import pdb
-        pdb.set_trace()
-
         self.assertEqual(track_rows[1].text,
                          'Kind of Blue Freddie Freeloader 2')
         self.assertEqual(track_rows[2].text, 'Kind of Blue Blue in Green 3')
@@ -231,6 +228,18 @@ class StudentTestCase(LiveServerTestCase):
                          'Know What I Mean? Waltz for Debby -')
         self.assertEqual(
             track_rows[5].text, 'My Favorite Things My Favorite Things -')
+
+        self.browser.find_element(By.LINK_TEXT, 'ADD TRACK').click()
+
+        self.browser.find_element(By.NAME, 'name').send_keys('So What')
+        self.browser.find_element(By.NAME, 'album').find_elements(
+            By.TAG_NAME, 'option')[1].click()
+        self.browser.find_element(By.NAME, 'track_number').send_keys('1')
+        self.browser.find_element(By.NAME, 'slug').send_keys('so-what')
+        self.browser.find_element(By.CSS_SELECTOR, '#submit-row input').click()
+
+        import pdb
+        pdb.set_trace()
 
         self.fail('Incomplete Test')
         # Test adding record and solos number

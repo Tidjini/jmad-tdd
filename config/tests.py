@@ -63,10 +63,10 @@ class StudentTestCase(LiveServerTestCase):
         )
 
         self.track4 = Track.objects.create(
-            name='Freeddie Freeloader', album=self.album2
+            name='Freddie Freeloader', album=self.album2, track_number=2
         )
         self.track5 = Track.objects.create(
-            name='Blue in Green', album=self.album2
+            name='Blue in Green', album=self.album2, track_number=3
         )
         self.solo3 = Solo.objects.create(
             track=self.track3,
@@ -228,9 +228,9 @@ class StudentTestCase(LiveServerTestCase):
         self.assertEqual(track_rows[2].text, 'Kind of Blue Blue in Green 3')
         self.assertEqual(track_rows[3].text, 'Kind of Blue All Blues 4')
         self.assertEqual(track_rows[4].text,
-                         'Know What I Mean? Walts for Debby (None)')
+                         'Know What I Mean? Waltz for Debby -')
         self.assertEqual(
-            track_rows[5].text, 'My Favorite Things My Favorite Things (None)')
+            track_rows[5].text, 'My Favorite Things My Favorite Things -')
 
         self.fail('Incomplete Test')
         # Test adding record and solos number

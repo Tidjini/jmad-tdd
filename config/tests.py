@@ -281,7 +281,17 @@ class StudentTestCase(LiveServerTestCase):
                          'Waltz for Debby Cannonball Adderley')
         self.assertEqual(solo_rows[4].text, 'My Favorite Things John Coltrane')
 
-        # self.browser.find_element(By.LINK_TEXT, 'ADD SOLO').click()
+        # He adds a solo to existed Track
+        self.browser.find_element(By.LINK_TEXT, 'ADD SOLO').click()
+        solo_form = self.browser.find_element(By.ID, 'solo_form')
+        solo_form.find_element(By.NAME, 'track').find_elements(
+            By.TAG_NAME, 'option')[6].click()
+        solo_form.find_element(By.NAME, 'artist').send_keys('McCoy Tyner')
+        solo_form.find_element(By.NAME, 'instrument').send_keys('Piano')
+        solo_form.find_element(By.NAME, 'start_time').send_keys('2:19')
+        solo_form.find_element(By.NAME, 'end_time').send_keys('7:01')
+        solo_form.find_element(By.NAME, 'slug').send_keys('mcoy-tyner')
+        solo_form.find_element(By.CSS_SELECTOR, '.submit-row inmut').click()
 
         import pdb
         pdb.set_trace()

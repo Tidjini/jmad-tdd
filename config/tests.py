@@ -300,14 +300,14 @@ class StudentTestCase(LiveServerTestCase):
 
         # switch to track wind
         self.browser.switch_to.window(self.browser.window_handles[1])
-        track_form = self.browser.find_element(By.ID, 'track_from')
+        track_form = self.browser.find_element(By.ID, 'track_form')
         track_form.find_element(By.NAME, 'name').send_keys('In Walked Bud')
 
         # add new album
         track_form.find_element(By.ID, 'add_id_album').click()
         # switch to album window
         self.browser.switch_to.window(self.browser.window_handles[2])
-        album_form = self.browser.find_element(By.ID, 'album_from')
+        album_form = self.browser.find_element(By.ID, 'album_form')
         album_form.find_element(By.NAME, 'name').send_keys('Misterioso')
         album_form.find_element(By.NAME, 'artist').send_keys(
             'Thelonious Monk Quartet')
@@ -316,7 +316,7 @@ class StudentTestCase(LiveServerTestCase):
 
         # switch to track window
         self.browser.switch_to.window(self.browser.window_handles[1])
-        track_form = self.browser.find_element(By.ID, 'track_from')
+        track_form = self.browser.find_element(By.ID, 'track_form')
         track_form.find_element(By.NAME, 'track_number').send_keys('4')
         track_form.find_element(By.NAME, 'slug').send_keys('in-walked-bud')
         track_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
@@ -336,7 +336,7 @@ class StudentTestCase(LiveServerTestCase):
         pdb.set_trace()
 
         self.assertEqual(self.browser.find_elements(By.CSS_SELECTOR, '#result_list tr')[
-                         4].text, 'In Walked Bud Tenor Saxophone 0:59-6:21')
+                         4].text, 'In Walked Bud Johnny Griffin 0:59-6:21')
 
         self.fail('Incomplete Test')
         # Test adding record and solos number

@@ -236,7 +236,9 @@ class StudentTestCase(LiveServerTestCase):
             By.TAG_NAME, 'option')[1].click()
         self.browser.find_element(By.NAME, 'track_number').send_keys('1')
         self.browser.find_element(By.NAME, 'slug').send_keys('so-what')
-        self.browser.find_element(By.CSS_SELECTOR, '#submit-row input').click()
+        self.browser.find_element(By.CSS_SELECTOR, '.submit-row input').click()
+        self.assertEqual(self.browser.find_elements(By.CSS_SELECTOR, '#result_list tr')[
+                         1].text, 'Kind of Blue So What 1')
 
         import pdb
         pdb.set_trace()

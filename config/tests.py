@@ -266,6 +266,20 @@ class StudentTestCase(LiveServerTestCase):
         self.assertEqual(self.browser.find_elements(By.CSS_SELECTOR, '#result_list tr')[
                          1].text, "Cookin' My Funny Valentine 1")
 
+        # he goes back to main and adds new solo
+        self.browser.find_element(By.CSS_SELECTOR, '#site-name a').click()
+        self.browser.find_element(By.LINK_TEXT, 'Solos').click()
+
+        solo_rows = self.browser.find_elements(
+            By.CSS_SELECTOR, '#result_list tr')
+        self.assertEqual(solo_rows[1].text, 'All Blues Miles Davis 1:46-4:04')
+        self.assertEqual(solo_rows[2].text,
+                         'All Blues Cannon Adderley 4:05-6:04')
+        self.assertEqual(solo_rows[3].text, 'Waltz for Debby Cannon Adderley')
+        self.assertEqual(solo_rows[4].text, 'My Favorite Things John Coltrane')
+
+        # self.browser.find_element(By.LINK_TEXT, 'ADD SOLO').click()
+
         import pdb
         pdb.set_trace()
 

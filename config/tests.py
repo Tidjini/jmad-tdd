@@ -79,7 +79,9 @@ class StudentTestCase(LiveServerTestCase):
             track=self.track2,
             artist='Miles Davis',
             instrument='trumpet',
-            slug='miles-davis'
+            slug='miles-davis',
+            start_time='1:46',
+            end_time='4:04'
         )
 
     def find_search_results(self):
@@ -274,8 +276,9 @@ class StudentTestCase(LiveServerTestCase):
             By.CSS_SELECTOR, '#result_list tr')
         self.assertEqual(solo_rows[1].text, 'All Blues Miles Davis 1:46-4:04')
         self.assertEqual(solo_rows[2].text,
-                         'All Blues Cannon Adderley 4:05-6:04')
-        self.assertEqual(solo_rows[3].text, 'Waltz for Debby Cannon Adderley')
+                         'All Blues Cannonball Adderley 2:06-4:01')
+        self.assertEqual(solo_rows[3].text,
+                         'Waltz for Debby Cannonball Adderley')
         self.assertEqual(solo_rows[4].text, 'My Favorite Things John Coltrane')
 
         # self.browser.find_element(By.LINK_TEXT, 'ADD SOLO').click()

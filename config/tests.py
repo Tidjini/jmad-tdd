@@ -285,16 +285,19 @@ class StudentTestCase(LiveServerTestCase):
         self.browser.find_element(By.LINK_TEXT, 'ADD SOLO').click()
         solo_form = self.browser.find_element(By.ID, 'solo_form')
         solo_form.find_element(By.NAME, 'track').find_elements(
-            By.TAG_NAME, 'option')[6].click()
+            By.TAG_NAME, 'option')[7].click()
         solo_form.find_element(By.NAME, 'artist').send_keys('McCoy Tyner')
         solo_form.find_element(By.NAME, 'instrument').send_keys('Piano')
         solo_form.find_element(By.NAME, 'start_time').send_keys('2:19')
         solo_form.find_element(By.NAME, 'end_time').send_keys('7:01')
         solo_form.find_element(By.NAME, 'slug').send_keys('mcoy-tyner')
-        solo_form.find_element(By.CSS_SELECTOR, '.submit-row inmut').click()
+        solo_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
 
         import pdb
         pdb.set_trace()
+
+        self.assertEqual(self.browser.find_elements(By.CSS_SELECTOR, '#result_list tr')[
+                         5].text, 'My Favorite Things McCoy Tyner 2:19-7:01')
 
         self.fail('Incomplete Test')
         # Test adding record and solos number

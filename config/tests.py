@@ -240,6 +240,32 @@ class StudentTestCase(LiveServerTestCase):
         self.assertEqual(self.browser.find_elements(By.CSS_SELECTOR, '#result_list tr')[
                          1].text, 'Kind of Blue So What 1')
 
+        # he adds another track, this time on album that not exist
+        self.browser.find_element(By.LINK_TEXT, 'ADD TRACK').click()
+        track_form = self.browser.find_element(By.ID, 'track_form')
+        track_form.find_element(By.NAME, 'name').send_keys(
+            'My Funny Valentine')
+        # he clicks oon add a new album
+        track_form.find_element(By.ID, 'add_id_album').click()
+        # on new window he adds album information
+        self.browser.switch_to.window(self.browser.window_handles[1])
+        album_form = self.browser.find_element(By.ID, 'album_form')
+        album_form.find_element(By.NAME, 'name').send_keys("Cookin'")
+        album_form.find_element(By.NAME, 'artist').send_keys(
+            "Miles Davis Quintet")
+        album_form.find_element(By.NAME, 'slug').send_keys("cookin")
+        self.browser.find_element(By.CSS_SELECTOR, '.submit-row input').click()
+
+        # after creating album he continue adding track information
+        self.browser.switch_to.window(self.browser.window_handles[0])
+        track_form = self.browser.find_element(By.ID, 'track_form')
+        track_form.find_element(By.NAME, 'track_number').send_keys('1')
+        track_form.find_element(By.NAME, 'slug').send_keys(
+            'my-funny-valentine')
+        track_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
+        self.assertEqual(self.browser.find_elements(By.CSS_SELECTOR, '#result_list tr')[
+                         1].text, "Cookin' My Funny Valentine 1")
+
         import pdb
         pdb.set_trace()
 

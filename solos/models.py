@@ -12,6 +12,9 @@ class Solo(models.Model):
     end_time = models.CharField(max_length=20)
     slug = models.SlugField()
 
+    def get_duration(self):
+        return f'{self.start_time}-{self.end_time}'
+
     def get_absolute_url(self):
         from django.urls import reverse
 

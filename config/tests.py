@@ -293,11 +293,50 @@ class StudentTestCase(LiveServerTestCase):
         solo_form.find_element(By.NAME, 'slug').send_keys('mcoy-tyner')
         solo_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
 
+        # he adds a solo with track and album thats not exist
+        self.browser.find_element(By.LINK_TEXT, 'ADD SOLO').click()
+        solo_form = self.browser.find_element(By.ID, 'solo_form')
+        solo_form.find_element(By.ID, 'add_id_track').click()
+
+        # switch to track wind
+        self.browser.switch_to.window(self.browser.window_handles[1])
+        track_form = self.browser.find_element(By.ID, 'track_from')
+        track_form.find_element(By.NAME, 'name').send_keys('In Walked Bud')
+
+        # add new album
+        track_form.find_element(By.ID, 'add_id_album').click()
+        # switch to album window
+        self.browser.switch_to.window(self.browser.window_handles[2])
+        album_form = self.browser.find_element(By.ID, 'album_from')
+        album_form.find_element(By.NAME, 'name').send_keys('Misterioso')
+        album_form.find_element(By.NAME, 'artist').send_keys(
+            'Thelonious Monk Quartet')
+        album_form.find_element(By.NAME, 'slug').send_keys('misterioso')
+        album_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
+
+        # switch to track window
+        self.browser.switch_to.window(self.browser.window_handles[1])
+        track_form = self.browser.find_element(By.ID, 'track_from')
+        track_form.find_element(By.NAME, 'track_number').send_keys('4')
+        track_form.find_element(By.NAME, 'slug').send_keys('in-walked-bud')
+        track_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
+
+        # switch to main (Solo) window
+        self.browser.switch_to.window(self.browser.window_handles[0])
+        solo_form = self.browser.find_element(By.ID, 'solo_form')
+        solo_form.find_element(By.NAME, 'artist').send_keys('Johnny Griffin')
+        solo_form.find_element(
+            By.NAME, 'instrument').send_keys('Tenor Saxophone')
+        solo_form.find_element(By.NAME, 'start_time').send_keys('0:59')
+        solo_form.find_element(By.NAME, 'end_time').send_keys('6:21')
+        solo_form.find_element(By.NAME, 'slug').send_keys('johnny-griffin')
+        solo_form.find_element(By.CSS_SELECTOR, '.submit-row input').click()
+
         import pdb
         pdb.set_trace()
 
         self.assertEqual(self.browser.find_elements(By.CSS_SELECTOR, '#result_list tr')[
-                         5].text, 'My Favorite Things McCoy Tyner 2:19-7:01')
+                         4].text, 'In Walked Bud Tenor Saxophone 0:59-6:21')
 
         self.fail('Incomplete Test')
         # Test adding record and solos number

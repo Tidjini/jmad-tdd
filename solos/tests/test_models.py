@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from solos.models import Solo
 from albums.models import Album, Track
+from unittest.mock import patch
 
 
 class SoloModelTestCase(TestCase):
@@ -42,3 +43,14 @@ class SoloModelTestCase(TestCase):
             self.solo.get_absolute_url(),
             '/recordings/at-the-startford-shakespearean-festival/falling-in-love-with-love/oscar-peterson/'
         )
+
+    @patch('musicbrainzngs.search_artists')
+    def test_get_artist_tracks_from_musicbrainz(self, mock_mb_search_artists):
+        # test that we can make Solos from the Musicbrainz API
+
+        created_solos = Solo.get_artist_tracks_from_musicbrainz(
+            'Jaco Pastorius')
+        mock_mb_search_artists.assert_called_with('Jaco Pastorius')
+        self.assertEqual(len(created_solos), 2)
+        self.assertEqual(created_solos[0].artist, 'Jaco Pastorius')
+        self.assertEqual(created_solos[1].track.name, 'Donna Lee')

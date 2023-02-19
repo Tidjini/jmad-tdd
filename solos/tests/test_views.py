@@ -1,5 +1,6 @@
 from django.test import TestCase, RequestFactory
 from django.db.models.query import QuerySet
+
 from solos.views import index, solo_detail
 from solos.models import Solo
 from albums.models import Album, Track

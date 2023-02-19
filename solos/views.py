@@ -1,11 +1,9 @@
 from django.shortcuts import render
 
-import musicbrainzngs as mb
 
 from .models import Solo
 
 # Create your views here.
-mb.set_useragent('JMAD - http://jmad.us/', version='0.0.1')
 
 
 def index(request):
@@ -18,7 +16,8 @@ def index(request):
     context = {'solos': solos_queryset}
 
     if context['solos'].count() == 0 and artist_kwarg:
-        context['solos'] = mb.search_artists(artist_kwarg)
+        context['solos'] = Solo.get_artist_tracks_from_musicbrainz(
+            artist_kwarg)
 
     import pdb
     pdb.set_trace()

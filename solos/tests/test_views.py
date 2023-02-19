@@ -66,6 +66,14 @@ class IndexViewTestCase(SoloBaseTestCase):
         self.assertEqual(len(solos), 1)
         self.assertEqual(solos[0].artist, 'Buddy Rich')
 
+    def test_index_view_return_external_tracks(self):
+        # test that index return MB Artists if not exist in our Database
+        response = self.client.get(
+            '/', {'instrument': 'Bass', 'artist': 'Jaco Pastorius'})
+        solos = response.context['solos']
+        self.assertEqual(len(solos), 1)
+        self.assertEqual(solos[0].artist, 'Jaco Pastorius')
+
 
 class SoloViewTestCase(SoloBaseTestCase):
 

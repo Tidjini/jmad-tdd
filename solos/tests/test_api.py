@@ -21,7 +21,7 @@ class SoloAPITestCase(APITestCase):
             'end_time': '3:21'
         })
 
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 201, response.data)
         self.assertEqual(response.data, {
             'url': 'http://testserver/api/solos/1/',
             'track': 'http://testserver/api/tracks/2/',

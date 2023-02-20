@@ -1,3 +1,4 @@
+from django.urls import resolve
 from rest_framework.test import APITestCase
 
 # Create your tests here.
@@ -16,3 +17,9 @@ class AlbumAPITestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data[0]['name'], 'A Love Supreme')
         self.assertEqual(response.data[1]['url'], 'http://testserver/api/albums/1/')
+        
+        
+    def test_album_list_route(self):
+        # test that we have got routing set up for albums
+        route = resolve('/api/albums/')
+        self.assertEqual(route.func.__name__, 'AlbumViewSet')

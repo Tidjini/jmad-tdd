@@ -5,6 +5,6 @@ from .serializers import AlbumSerializer
 # Create your views here.
 
 
-class AlbumViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class AlbumViewSet(viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin):
     queryset = Album.objects.all()
     serializer_class = AlbumSerializer

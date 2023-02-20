@@ -14,7 +14,7 @@ class SoloAPITestCase(APITestCase):
 
     def test_create_solo(self):
         response = self.client.post('/api/solos/', {
-            'track': '/api/tracks/2/',
+            'track': 'http://testserver/api/tracks/2/',
             'artist': 'John Coltrane',
             'instrument': 'saxophone',
             'start_time': '0:24',

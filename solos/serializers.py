@@ -13,4 +13,4 @@ class SoloSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Solo
         fields = '__all__'
-        read_only_fields = 'id',
+        read_only_fields = 'slug', 'id'

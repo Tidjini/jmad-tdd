@@ -14,14 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
+# django rest framework
+from rest_framework import routers
 
 from solos import views
+from albums.views import AlbumViewSet
+
+router = routers.SimpleRouter()
+router.register(r'albums', AlbumViewSet)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^$', views.index, name='index'),
-    # re_path(r'^solos/(?P<pk>\d+)/$', views.SoloDetailView.as_view())
+    re_path(r'^api/', include(router.urls)),
     re_path(
         r'^recordings/(?P<album>[\w-]+)/(?P<track>[\w-]+)/(?P<artist>[\w-]+)/$',
         views.solo_detail,

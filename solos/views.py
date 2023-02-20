@@ -1,8 +1,8 @@
 from django.shortcuts import render
-
+from rest_framework import viewsets, mixins
 
 from .models import Solo
-
+from .serializers import SoloSerializer
 # Create your views here.
 
 
@@ -35,3 +35,8 @@ def solo_detail(request, album, track, artist):
         track__album__slug=album
     )}
     return render(request, 'solos/solo_detail.html', context)
+
+
+class SoloViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
+    queryset = Solo.objects.all()
+    serializer_class = SoloSerializer

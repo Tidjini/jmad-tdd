@@ -21,9 +21,10 @@ from rest_framework import routers
 from solos import views
 from albums.views import AlbumViewSet
 
+
 router = routers.SimpleRouter()
 router.register(r'albums', AlbumViewSet)
-
+router.register(r'solos', views.SoloViewSet)
 
 
 urlpatterns = [

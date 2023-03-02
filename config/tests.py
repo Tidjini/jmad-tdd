@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from solos.models import Solo
 from albums.models import Album, Track
 
+# functional tests
+
 
 class StudentTestCase(LiveServerTestCase):
 
@@ -91,8 +93,10 @@ class StudentTestCase(LiveServerTestCase):
         """
         test that a user can search for solos
         """
-        # Steve example write todo later
+        # Steve can enter to home page
         home_page = self.browser.get(self.live_server_url + '/')
+
+        # Steve can show See JMAD in navbar
         brand_element = self.browser.find_element(
             By.CLASS_NAME, 'navbar-brand')
         self.assertEqual('JMAD', brand_element.text)
